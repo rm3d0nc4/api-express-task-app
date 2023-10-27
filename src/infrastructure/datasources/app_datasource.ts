@@ -1,6 +1,8 @@
 import { DataSource } from "typeorm";
 import { Task } from "../../domain/entities/task";
 import { configDotenv } from "dotenv";
+import { User } from "../../domain/entities/user";
+import { Profile } from "../../domain/entities/profile";
 
 
 configDotenv();
@@ -15,7 +17,7 @@ export const appDatasource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [
-        Task
+        Task, User, Profile
     ],
     subscribers: [],
     migrations: [
