@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Controller } from "../../../shared/contracts/controller";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
-import { TaskRepository } from "../../../shared/contracts/task_repository";
+import { TaskRepository } from "../../../domain/repositories/task_repository";
 
 
 class DeleteTaskController implements Controller<Request, Response, NextFunction> {

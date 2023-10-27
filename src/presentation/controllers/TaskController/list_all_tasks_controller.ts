@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Controller } from "../../../shared/contracts/controller";
-import { TaskRepository } from "../../../shared/contracts/task_repository";
+import { TaskRepository } from "../../../domain/repositories/task_repository";
 import { ParamsDictionary } from "express-serve-static-core";
 
 interface ListAllTasksQueryString {
@@ -19,7 +19,6 @@ class ListAllTasksController implements Controller<Request, Response, NextFuncti
 
         const { done, orderBy } = req.query;
         console.log(`Controller: ${done} ${orderBy}`)
-        console.log(`Controller: ${this.repository}`)
         const tasks = await this.repository.findAll(orderBy, done);
         return res.status(200).json(tasks);
     }

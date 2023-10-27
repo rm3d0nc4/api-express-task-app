@@ -1,6 +1,7 @@
-import { appDatasource } from '../../infrastructure/datasources/app_datasource';
-import { TaskRepository } from '../../shared/contracts/task_repository';
-import { Task } from '../../domain/entities/task';
+import { appDatasource } from '../../../infrastructure/datasources/app_datasource';
+import { TaskRepository } from '../../../domain/repositories/task_repository';
+import { Task } from '../../../domain/entities/task';
+import { AppError } from '../../../shared/contracts/app_error';
 
 class TaskRepositoryWithTypeORM implements TaskRepository {
     private repository = appDatasource.getRepository(Task);;
@@ -14,6 +15,7 @@ class TaskRepositoryWithTypeORM implements TaskRepository {
 
     async findById(id: string): Promise<Task> {
         const task = await this.repository.findOneBy({ id: id });
+        if (task == null) { throw new AppError("Task not found", 404) }
         return task!;
     }
 
@@ -22,6 +24,7 @@ class TaskRepositoryWithTypeORM implements TaskRepository {
     }
 
     async delete(id: string): Promise<void> {
+        await this.findById(id);
         await this.repository.delete({ id: id });
     }
 }
